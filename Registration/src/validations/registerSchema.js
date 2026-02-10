@@ -1,10 +1,15 @@
 import * as yup from "yup";
 
 export const registerSchema = yup.object({
-  fullName: yup
+  firstName: yup
     .string()
     .required("Full name is required")
-    .min(3, "Minimum 3 characters"),
+    .min(4, "Minimum 4 characters"),
+
+ lastName: yup
+    .string()
+    .required("Last name is required")
+    .min(4, "Minimum 4 characters"),
 
   email: yup
     .string()
@@ -14,7 +19,7 @@ export const registerSchema = yup.object({
   password: yup
     .string()
     .required("Password is required")
-    .min(8, "Minimum 8 characters")
+    .min(6, "Minimum 6 characters")
     .matches(/\d/, "Must contain at least one number"),
 
   confirmPassword: yup

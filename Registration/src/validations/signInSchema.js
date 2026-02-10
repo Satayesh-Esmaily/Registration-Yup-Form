@@ -1,0 +1,13 @@
+import * as yup from "yup";
+
+export const signInSchema = yup.object({
+  email: yup
+    .string()
+    .required("Email is required")
+    .email("Invalid email"),
+
+  password: yup
+    .string()
+    .required("Password is required")
+    .min(8, "Minimum 8 characters"),
+});
