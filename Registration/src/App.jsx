@@ -1,35 +1,100 @@
-import { useState } from 'react'
-import reactLogo from './assets/react.svg'
-import viteLogo from '/vite.svg'
-import './App.css'
+import { useState } from "react";
+import { useForm } from "react-hook-form";
+import { yupResolver } from "@hookform/resolvers/yup";
 
-function App() {
-  const [count, setCount] = useState(0)
+import { registerSchema } from "./validations/registerSchema";
+import FormInput from "./components/FormInput";
+import FormCheckbox from "./components/FormCheckbox";
+import FormButton from "./components/FormButton";
+import FormSuccess from "./components/FormSuccess";
+
+export default function RegisterForm() {
+  const [success, setSuccess] = useState(false);
+
+const {
+  register,
+  handleSubmit,
+  formState: { errors, touchedFields, isValid },
+  reset,
+} = useForm({
+  resolver: yupResolver(registerSchema),
+  mode: "onChange",
+  reValidateMode: "onChange",
+});
+
+  const onSubmit = (data) => {
+      const result = {
+    fullName: data.fullName,
+    email: data.email,
+    password: data.password,
+    confirmPassword: data.confirmPassword,
+    terms: data.terms,
+  };
+    console.log(result);
+    setSuccess(true);
+    reset();
+  };
 
   return (
-    <>
-      <div>
-        <a href="https://vite.dev" target="_blank">
-          <img src={viteLogo} className="logo" alt="Vite logo" />
-        </a>
-        <a href="https://react.dev" target="_blank">
-          <img src={reactLogo} className="logo react" alt="React logo" />
-        </a>
-      </div>
-      <h1>Vite + React</h1>
-      <div className="card">
-        <button onClick={() => setCount((count) => count + 1)}>
-          count is {count}
-        </button>
-        <p>
-          Edit <code>src/App.jsx</code> and save to test HMR
-        </p>
-      </div>
-      <p className="read-the-docs">
-        Click on the Vite and React logos to learn more
-      </p>
-    </>
-  )
-}
+    <div className="max-w-md mx-auto mt-10 p-6 rounded-2xl 
+                bg-white dark:bg-black
+                shadow-lg dark:shadow-none
+                border border-gray-200 dark:border-gray-800">
 
-export default App
+      <h2 className="text-2xl font-semibold mb-6 text-gray-900 dark:text-white">
+       Register
+      </h2>
+
+
+      <form onSubmit={handleSubmit(onSubmit)}>
+        <FormInput
+          label="Full Name"
+          name="fullName"
+          register={register}
+          error={errors.fullName?.message}
+        />
+
+        <FormInput
+          label="Email"
+          type="email"
+          name="email"
+          register={register}
+          error={errors.email?.message}
+        />
+
+        <FormInput
+          label="Password"
+          type="password"
+          name="password"
+          register={register}
+          error={errors.password?.message}
+        />
+
+        <FormInput
+          label="Confirm Password"
+          type="password"
+          name="confirmPassword"
+          register={register}
+          error={errors.confirmPassword?.message}
+        />
+
+        <FormCheckbox
+          label="I accept the Terms & Conditions"
+          name="terms"
+          register={register}
+          error={errors.terms?.message}
+          showError={touchedFields.terms || isValid === false}
+        />
+
+
+        <FormButton
+          text="Register"
+          disabled={!isValid}
+       />
+
+      </form>
+
+      <FormSuccess show={success} />
+    </div>
+  );
+}
