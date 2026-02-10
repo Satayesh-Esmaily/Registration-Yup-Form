@@ -94,7 +94,8 @@ export default function RegisterForm() {
         <FormButton text="Register" disabled={!isValid} />
       </form>
 
-      <FormSuccess show={success} />
+      <FormSuccess show={success} message="Registration Successful!" />
+
 
       <AuthFooter page="register" />
     </AuthLayout>

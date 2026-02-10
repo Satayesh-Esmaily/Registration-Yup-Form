@@ -53,7 +53,8 @@ export default function SignIn() {
         <FormButton text="Sign In" disabled={!isValid} />
       </form>
 
-      <FormSuccess show={success} />
+      <FormSuccess show={success} message="Sign In Successful!" />
+
 
       <AuthFooter page="signin" />
     </AuthLayout>
