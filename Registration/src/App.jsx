@@ -6,8 +6,10 @@ export default function App() {
   return (
     <BrowserRouter>
       <Routes>
+        <Route path="/" element={<SignIn />} />      
         <Route path="/register" element={<Register />} />
         <Route path="/signin" element={<SignIn />} />
+        <Route path="*" element={<div>Page Not Found</div>} /> 
       </Routes>
     </BrowserRouter>
   );
